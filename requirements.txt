@@ -1,0 +1,10 @@
+langchain
+faiss-cpu
+openai
+pypdf
+python-dotenv
+bert-score
+pandas
+numpy
+tiktoken
+langchain-community
