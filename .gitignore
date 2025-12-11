@@ -1,1 +1,65 @@
+# Project-specific exclusions (keep existing)
 /materials/
+/data/raw_pdfs/
+data/vector_store/
+.env
+
+# Python cache and compiled files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# FAISS and data files
+*.pkl
+*.index
+*.faiss
+
+# Results and output files
+*.json
+!requirements.txt
+experiments/results/
+quiz_output.json
+baseline_*.json
+evaluation_results.json
+evaluation_*.json
+multiagent_*.json
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+venvgenai/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+.cache/

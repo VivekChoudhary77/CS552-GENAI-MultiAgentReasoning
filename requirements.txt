@@ -1,6 +1,6 @@
 langchain
 faiss-cpu
-openai
+google-generativeai
 pypdf
 python-dotenv
 bert-score
@@ -8,3 +8,6 @@ pandas
 numpy
 tiktoken
 langchain-community
+langchain-google-genai
+sentence-transformers
+scikit-learn
