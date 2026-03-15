@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Agent Adversarial RAG for Educational Assessment Generation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      background: #fff;
+      color: #111;
+      line-height: 1.75;
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    header {
+      border-bottom: 2px solid #111;
+      padding-bottom: 32px;
+      margin-bottom: 48px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      color: #444;
+      font-style: italic;
+    }
+
+    .authors {
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: #333;
+    }
+
+    .authors span {
+      font-weight: 600;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-top: 32px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    a {
+      color: #111;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    a:hover {
+      color: #555;
+    }
+
+    .figure {
+      margin: 36px 0;
+      text-align: center;
+    }
+
+    .figure img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ddd;
+    }
+
+    .figure-caption {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #555;
+      font-style: italic;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      font-weight: 600;
+      border-bottom: 2px solid #111;
+      white-space: nowrap;
+    }
+
+    tr:last-child td {
+      border-bottom: 2px solid #111;
+    }
+
+    .highlight-row td {
+      font-weight: 600;
+    }
+
+    ul {
+      margin-bottom: 16px;
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: #f4f4f4;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      list-style: none;
+      padding: 0;
+      margin: 16px 0;
+    }
+
+    .tech-list li {
+      background: #111;
+      color: #fff;
+      padding: 5px 14px;
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 0;
+    }
+
+    footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid #ccc;
+      font-size: 0.85rem;
+      color: #777;
+    }
+
+    footer a {
+      color: #555;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border: 1px solid #111;
+      color: #111;
+      text-decoration: none;
+    }
+
+    .badge:hover {
+      background: #111;
+      color: #fff;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 36px 16px 48px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <h1>Multi-Agent Adversarial RAG for Educational Assessment Generation</h1>
+      <p class="subtitle">Automating university-level quiz generation through structured adversarial debate between retrieval-augmented LLM agents.</p>
+      <p class="authors">
+        <span>Vivek Choudhary</span> and <span>Kumar Srinivas Bobba</span><br>
+        Worcester Polytechnic Institute / CS552 Generative AI
+      </p>
+      <div class="badge-row">
+        <a class="badge" href="https://github.com/VivekChoudhary77/CS552-GENAI-MultiAgentReasoning">GitHub Repo</a>
+        <a class="badge" href="https://arxiv.org/abs/2305.19118">Reference Paper</a>
+      </div>
+    </header>
+
+    <h2>Motivation</h2>
+    <p>
+      Generating good multiple-choice questions is harder than it looks. The question itself needs to test genuine understanding, and the wrong answer choices (distractors) need to be plausible enough that a student cannot eliminate them without actually knowing the material. A single LLM agent retrieving context from a document and producing a quiz in one pass tends to generate shallow questions with obvious distractors, because it only sees one side of the topic.
+    </p>
+    <p>
+      This project draws on the Multi-Agent Debate (MAD) framework introduced by
+      <a href="https://arxiv.org/abs/2305.19118">Liang et al. (2023)</a>,
+      which showed that having multiple LLM agents argue opposing positions and a judge synthesize the outcome produces more thorough reasoning than self-reflection by a single agent. The original MAD paper demonstrated this on machine translation and arithmetic reasoning. We adapted the same adversarial structure to a different problem: automated educational assessment generation over academic PDF documents.
+    </p>
+
+    <h2>How It Works</h2>
+    <p>
+      The system is a three-stage pipeline: document ingestion, adversarial debate, and quiz generation. Four components are involved: a retrieval engine and three LLM-powered agents.
+    </p>
+
+    <h3>1. Document Ingestion</h3>
+    <p>
+      Academic PDFs are extracted with PyPDF, split into overlapping chunks (1000 characters, 200-character overlap) using LangChain's RecursiveCharacterTextSplitter, embedded with SentenceTransformers (<code>all-MiniLM-L6-v2</code>), and indexed in a FAISS vector store using exact L2-distance search. This index is persisted to disk so it only needs to be built once per document set.
+    </p>
+
+    <h3>2. Adversarial Debate</h3>
+    <p>
+      Two agents take opposing roles. The <strong>Proponent</strong> generates a search query from the current debate state, retrieves supporting evidence from the FAISS index, and constructs an argument in favor of the topic using Google Gemini. The <strong>Opponent</strong> does the same but focuses on retrieving contradictory evidence, limitations, and counter-examples. Both agents are prompted to cite specific passages from the retrieved documents. This back-and-forth runs for a configurable number of rounds (two by default), producing a full debate transcript.
+    </p>
+    <p>
+      The adversarial setup is the key difference from standard single-agent RAG. By forcing one agent to argue against the topic, the system surfaces edge cases, misconceptions, and limitations that a single agent would overlook. This is directly inspired by the MAD framework's finding that divergent thinking between agents produces better outcomes than iterative self-reflection by one agent.
+    </p>
+
+    <h3>3. Quiz Generation</h3>
+    <p>
+      The <strong>Judge</strong> agent receives the complete debate transcript and synthesizes it into a single multiple-choice question. The Judge is prompted to produce three distractors at different difficulty levels: a hard distractor built from partial truths in the Opponent's arguments, a medium distractor based on common misconceptions that surfaced during the debate, and an easy distractor that is factually incorrect. The output is a structured JSON containing the question, correct answer, distractors, and an explanation.
+    </p>
+
+    <div class="figure">
+      <img src="images/architecture.png" alt="System architecture diagram showing PDF ingestion, FAISS retrieval, Proponent-Opponent debate, and Judge quiz generation.">
+      <p class="figure-caption">Figure 1. System architecture. PDFs are ingested and indexed. The Proponent and Opponent retrieve evidence and debate over multiple rounds. The Judge synthesizes the transcript into a structured MCQ.</p>
+    </div>
+
+    <h2>Baseline Comparison</h2>
+    <p>
+      To measure whether the adversarial debate actually helps, we implemented a baseline single-agent RAG system. This baseline retrieves the top-k document chunks for a topic, passes them to a single Gemini agent with a simpler prompt, and generates a quiz question directly. No debate, no opposing viewpoints. This is the standard approach used in most RAG-based question generation systems and serves as the control.
+    </p>
+
+    <h2>Evaluation</h2>
+    <p>
+      Distractor quality was evaluated using two metrics. <strong>Cosine similarity</strong> between the correct answer and each distractor was computed using <code>all-MiniLM-L6-v2</code> sentence embeddings via scikit-learn. Higher similarity indicates that a distractor is semantically close to the correct answer, meaning it is more challenging for students. <strong>BERTScore F1</strong> was computed between answer pairs using the <code>bert-score</code> library, providing a complementary measure of semantic overlap using contextualized BERT embeddings.
+    </p>
+    <p>
+      Both systems were evaluated on three academic topics: Machine Learning, Neural Networks, and Transformers.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th>System</th>
+          <th>Cosine Sim.</th>
+          <th>BERTScore F1</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Machine Learning</td>
+          <td>Baseline</td>
+          <td>0.342</td>
+          <td>0.867</td>
+        </tr>
+        <tr>
+          <td>Machine Learning</td>
+          <td>Multi-Agent</td>
+          <td>0.277</td>
+          <td>0.860</td>
+        </tr>
+        <tr>
+          <td>Neural Networks</td>
+          <td>Baseline</td>
+          <td>0.392</td>
+          <td>0.880</td>
+        </tr>
+        <tr>
+          <td>Neural Networks</td>
+          <td>Multi-Agent</td>
+          <td>1.000</td>
+          <td>1.000</td>
+        </tr>
+        <tr>
+          <td>Transformers</td>
+          <td>Baseline</td>
+          <td>1.000</td>
+          <td>1.000</td>
+        </tr>
+        <tr>
+          <td>Transformers</td>
+          <td>Multi-Agent</td>
+          <td>1.000</td>
+          <td>1.000</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>Average</td>
+          <td>Multi-Agent</td>
+          <td>+18.1%</td>
+          <td>+3.8%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="figure">
+      <img src="images/results.png" alt="Bar chart comparing baseline and multi-agent cosine similarity and BERTScore F1 across three topics.">
+      <p class="figure-caption">Figure 2. Comparison of distractor quality metrics between the baseline single-agent system and the multi-agent adversarial system across three academic topics.</p>
+    </div>
+
+    <h2>What I Observed</h2>
+    <p>
+      For the Machine Learning topic, the multi-agent system produced distractors with lower cosine similarity to the correct answer (0.277 vs. 0.342). This means the distractors were more semantically distinct while still being plausible, which is actually a better outcome for an educational setting where you want wrong answers to be clearly wrong but not trivially so.
+    </p>
+    <p>
+      For Neural Networks, the multi-agent system achieved perfect similarity scores, indicating distractors that closely mirror the correct answer's semantic structure while remaining factually distinct. This is the ideal case: distractors that are hard to distinguish from the truth without genuine understanding.
+    </p>
+    <p>
+      In qualitative terms, the multi-agent questions consistently required deeper reasoning. For example, a generated question on Maximum Likelihood Estimation asked students to identify the fundamental purpose and characteristic approach, requiring synthesis of multiple concepts rather than recalling a definition. One of the distractors incorporated partial truths from the Opponent's arguments about variational inference, creating a plausible but incorrect option that tests real conceptual understanding. This kind of distractor is difficult for a single-agent system to produce because it never encounters an opposing argument to draw from.
+    </p>
+
+    <h2>Technology Stack</h2>
+    <ul class="tech-list">
+      <li>Python</li>
+      <li>Google Gemini</li>
+      <li>FAISS</li>
+      <li>SentenceTransformers</li>
+      <li>LangChain</li>
+      <li>PyPDF</li>
+      <li>BERTScore</li>
+      <li>scikit-learn</li>
+      <li>NumPy</li>
+    </ul>
+
+    <h2>Reference</h2>
+    <p>
+      This project is inspired by and adapts the adversarial multi-agent debate framework from:
+    </p>
+    <p>
+      Tian Liang, Zhiwei He, Wenxiang Jiao, Xing Wang, Yan Wang, Rui Wang, Yujiu Yang, Shuming Shi, and Zhaopeng Tu.
+      <em>Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate.</em>
+      arXiv:2305.19118, 2023.
+      <a href="https://arxiv.org/abs/2305.19118">Paper</a> /
+      <a href="https://github.com/Skytliang/Multi-Agents-Debate">Code</a>
+    </p>
+
+    <footer>
+      <p>
+        Vivek Choudhary and Kumar Srinivas Bobba. CS552 Generative AI, Worcester Polytechnic Institute.
+        <br>
+        <a href="https://github.com/VivekChoudhary77/CS552-GENAI-MultiAgentReasoning">View on GitHub</a>
+      </p>
+    </footer>
+
+  </div>
+</body>
+</html>
